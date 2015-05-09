@@ -1,0 +1,25 @@
+<div class="jumbotron">
+
+  <ui-select ng-model="firstItem.selected" on-select="firstItemSelected($item, $model)" theme="selectize" style="width: 300px;">
+    <ui-select-match placeholder="Select a search criteria...">{{$select.selected}}</ui-select-match>
+    <ui-select-choices repeat="firstItem in firstList | filter: $select.search">
+      <span>{{firstItem}}</span>
+    </ui-select-choices>
+  </ui-select>
+
+  <ui-select ng-model="secondItem.selected" on-select="secondItemSelected($item, $model)" theme="selectize" ng-disabled="secondDisabled" style="width: 300px;">
+    <ui-select-match placeholder="Select another...">{{$select.selected}}</ui-select-match>
+    <ui-select-choices repeat="secondItem in secondList track by $index | filter: $select.search">
+      <span>{{secondItem}}</span>
+    </ui-select-choices>
+  </ui-select>
+
+  <div class="results" ng-show="gotResults()">
+    <ul class="list-group">
+        <li ng-repeat="result in results" class="list-group-item">
+            <span>{{result}}</span>
+        </li>
+    </ul>
+  </div>
+
+</div>
