@@ -38,7 +38,7 @@ angular.module('pokomonApp')
     // value of ng-show attribute set based on this
 	$scope.gotResults = function(){
 
-		var results = $scope.results;
+		var results = $scope.results || [];
 
 		if (results.length > 0){
 			return true;
