@@ -2,7 +2,8 @@
   "name": "pokomon",
   "version": "0.0.0",
   "dependencies": {
-    "express": "~4.x.x"
+    "express": "~4.x.x",
+    "bower": "~1.x.x"
   },
   "devDependencies": {
     "grunt": "^0.4.1",
@@ -38,6 +39,6 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
