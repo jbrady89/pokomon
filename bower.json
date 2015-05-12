@@ -2,7 +2,7 @@
   "name": "pokomon",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "latest",
+    "angular": "~1.2.x",
     "json3": "~3.3.1",
     "es5-shim": "~3.1.0",
     "bootstrap": "~3.2.0",
