@@ -11,8 +11,9 @@ angular.module('pokomonApp')
   .controller('MainCtrl', function ($http, $scope) {
 
   	// items to populate first list
-    $scope.firstList = ['abilities', 'cities and towns', 'items', 'locations', 'moves', 'natures', 'pokemon', 'regions'];
-
+    $scope.firstList = ['abilities', 'cities and towns', 'items', 'locations', 'moves', 'natures', 'pokemons', 'regions'];
+    $scope.lettersList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+    console.log($scope.lettersList);
     // second one is disabled until first one is selected
     $scope.secondDisabled = true;
 
@@ -25,10 +26,10 @@ angular.module('pokomonApp')
 	    },
     	createArray = function(response){
 
-    		var data = response.data,
-				listArray = data.split("\n");
+    		var data = response.data;
+				
 			
-			$scope.secondList = listArray;
+			$scope.secondList = data;
 
 			// reset the second one when a new first one is selected
 			$scope.secondItem.selected = undefined;
@@ -50,28 +51,59 @@ angular.module('pokomonApp')
 	// fires when first item is selected
     $scope.firstItemSelected = function($item, $model){
 
-    	if ($item == "cities and towns"){
-    		path = "/data/cities.txt";
-    	} else {
-    		path = "/data/" + $item + ".txt";
-    	}
+        if ( $item.match(/^(natures|regions)$/) ){
 
-    	getSecondListFrom(path)
-    	.then(createArray);
+            path = "/data/" + $item + ".json";
+            $scope.longList = false;
+            $scope.secondDisabled = false;
+            getSecondListFrom(path)
+            .then(createArray);
+            
+        } else {
+            $scope.secondList = $scope.lettersList;
+            $scope.longList = true;
+            $scope.secondItem.selected = undefined;
+            $scope.secondDisabled = false;
+        }
 
     }
 
     // fires when second item is selected
     $scope.secondItemSelected = function($item, $model){
     	//console.log("second item selected " + $item);
+        
+        if ( $.inArray($item, $scope.lettersList) !== -1) {
+            //show 3rd dropdown
+            if ($scope.firstItem.selected == "cities and towns"){
+                path = "/data/cities.json";
+            } else {
+                path = "/data/" + $scope.firstItem.selected + ".json";
+            }
 
-    	// return some results based on the first and second items
-    	var first = firstItem.selected;
-    	var second = secondItem.selected;
-    	console.log(first, second);
+            $http.get(path)
+            .then(function(response){
 
-    	// put our returned results here
-    	$scope.results = ["a", "b", "3"];
+                var items = response.data
+                var filteredList = items.filter(function(item){
+                    return item.letter == $item;
+                });
+
+                $scope.thirdList = filteredList;
+                $scope.thirdDisabled = false;
+
+            });
+
+        } else {
+
+            // return some results based on the first and second items
+            var first = firstItem.selected;
+            var second = secondItem.selected;
+            console.log(first, second);
+
+            // put our returned results here
+            $scope.results = ["a", "b", "3"];
+
+        }
 
     }
 

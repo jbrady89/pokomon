@@ -8,9 +8,16 @@
   </ui-select>
 
   <ui-select ng-model="secondItem.selected" on-select="secondItemSelected($item, $model)" theme="selectize" ng-disabled="secondDisabled" style="width: 300px;">
-    <ui-select-match placeholder="Select another...">{{$select.selected}}</ui-select-match>
+    <ui-select-match placeholder="Select another...">{{$select.selected.name || $select.selected}}</ui-select-match>
     <ui-select-choices repeat="secondItem in secondList track by $index | filter: $select.search">
-      <span>{{secondItem}}</span>
+      <span>{{secondItem.name || secondItem}}</span>
+    </ui-select-choices>
+  </ui-select>
+
+  <ui-select ng-show="longList" ng-model="thirdItem.selected" on-select="thirdItemSelected($item, $model)" theme="selectize" ng-disabled="thirdDisabled" style="width: 300px;">
+    <ui-select-match placeholder="Select another...">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="thirdItem in thirdList track by $index | filter: $select.search">
+      <span>{{thirdItem.name}}</span>
     </ui-select-choices>
   </ui-select>
 
