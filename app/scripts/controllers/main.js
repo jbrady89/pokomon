@@ -101,7 +101,27 @@ angular.module('pokomonApp')
             console.log(first, second);
 
             // put our returned results here
-            $scope.results = ["a", "b", "3"];
+            console.log($item.ids);
+        // this is the array with the indexes to look up in matches.json
+        var matchesArray = $item.ids;
+        $scope.loading = true;
+        $http.get("/data/matches.json")
+        .then(function(matches){
+            console.log(matches);
+            var matches = matches.data;
+            var returnedMatches = matchesArray.map(function(index){
+                console.log(index);
+                return matches[index - 1].matches
+            });
+            console.dir(returnedMatches);
+            $scope.results = returnedMatches;
+            reverseLookup($scope.results);
+            $scope.loading = false;
+
+        })
+        .catch(function(err){
+            console.log(err);
+        });
 
         }
 
