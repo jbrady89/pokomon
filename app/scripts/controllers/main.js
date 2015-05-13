@@ -106,22 +106,106 @@ angular.module('pokomonApp')
         }
 
     }
+    var matches = [];
+
+    (function loadData(){
+        var fileNames = ["abilities", "cities", "items", "locations", "matches", "moves", "natures", "pokemons"]
+        fileNames.forEach(function(name){
+            $http.get("/data/" + name + ".json")
+            .then(function(res){
+                var contents = res.data;
+                $scope[name] = contents;
+            });
+        });
+    })();
+
+
 
     var lookUp = function(index, type){
         console.log(index, type);
+        var matches = [];
+        var type = type.toLowerCase();
+        var typeArray = $scope[type];
+        var match = typeArray[index - 1];
+        matches.push(match.name);
+        return matches;
+    }
+
+    var createEquationString = function(previousValue, currentValue, index){
+        console.log(previousValue, currentValue);
+        $scope.matchResults.push(equationString);
+
     }
 
     var reverseLookup = function(results){
+
         console.dir(JSON.stringify(results))
-        results.forEach(function(result){
-            result.forEach(function(obj){
-                console.log(obj);
-                console.log(Object.keys(obj));
-                var keys = Object.keys(obj);
-                for (var i = 0; i < keys.length; i += 2){
-                    lookUp(obj[keys[i]], obj[keys[i + 1]]);
-                }
+        $scope.matchResults = [];
+        results.forEach(function(match){
+            console.log(match);
+
+            console.log(match.length);
+
+            if (match.length == 2){
+
+                var name1 = match[0][0].name;
+                var url1 = match[0][0].url;
+                var name2 = match[0][1].name;
+                var url2 = match[0][1].url;
+                var name3 = match[1][0].name;
+                var url3 = match[1][0].url;
+                var name4 = match[1][1].name;
+                var url4 = match[1][1].url;
+
+                var equationString = "<a href='" + url1 + "' target='_blank'>" + name1 + "</a> + " + 
+                                     "<a href='" + url2 + "' target='_blank'>" + name2 + "</a> = " +
+                                     "<a href='" + url3 + "' target='_blank'>" + name3 + "</a> + " + 
+                                     "<a href='" + url4 + "' target='_blank'>" + name4 + "</a>";
+
+                $scope.matchResults.push(equationString);
+
+            } else if (match.length == 3) {
+                var name1 = match[0][0].name;
+                var url1 = match[0][0].url;
+                var name2 = match[0][1].name;
+                var url2 = match[0][1].url;
+                var name3 = match[1][0].name;
+                var url3 = match[1][0].url;
+                var name4 = match[1][1].name;
+                var url4 = match[1][1].url;
+                var name5 = match[2][0].name;
+                var url5 = match[2][0].url;
+                var name6 = match[2][1].name;
+                var url6 = match[2][1].url;
+
+                var equationString = "<a href='" + url1 + "' target='_blank'>" + name1 + "</a> + " + 
+                                     "<a href='" + url2 + "' target='_blank'>" + name2 + "</a> = " +
+                                     "<a href='" + url3 + "' target='_blank'>" + name3 + "</a> + " + 
+                                     "<a href='" + url4 + "' target='_blank'>" + name4 + "</a> = " +
+                                     "<a href='" + url5 + "' target='_blank'>" + name5 + "</a> + " + 
+                                     "<a href='" + url6 + "' target='_blank'>" + name6 + "</a>";
+
+
+            }
+
+            var result = {
+                    string: equationString
+                };
+
+            $scope.matchResults.push(result);
+            /*console.log(matches.length);
+
+            match[0].name;
+
+            var equationString = match.reduce(function(previousValue, currentValue, index, match){
+                console.log(previousValue, currentValue);
+                console.log(index);
+
+                return createEquationString(previousValue, currentValue, index);
             });
+
+            $scope.matchResults.push(equationString);*/
+
         });
     }
 
@@ -132,8 +216,10 @@ angular.module('pokomonApp')
         console.log($item.ids);
         // this is the array with the indexes to look up in matches.json
         var matchesArray = $item.ids;
+        $scope.loading = true;
         $http.get("/data/matches.json")
         .then(function(matches){
+            console.log(matches);
             var matches = matches.data;
             var returnedMatches = matchesArray.map(function(index){
                 console.log(index);
@@ -142,7 +228,11 @@ angular.module('pokomonApp')
             console.dir(returnedMatches);
             $scope.results = returnedMatches;
             reverseLookup($scope.results);
+            $scope.loading = false;
 
+        })
+        .catch(function(err){
+            console.log(err);
         });
     }
 
