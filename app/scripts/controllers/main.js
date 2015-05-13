@@ -141,7 +141,9 @@ angular.module('pokomonApp')
 
         console.dir(JSON.stringify(results))
         $scope.matchResults = [];
-        results.forEach(function(match){
+
+        if (results.length){
+            results.forEach(function(match){
             console.log(match);
 
             console.log(match.length);
@@ -194,7 +196,7 @@ angular.module('pokomonApp')
 
             $scope.matchResults.push(result);
             /*console.log(matches.length);
-
+        
             match[0].name;
 
             var equationString = match.reduce(function(previousValue, currentValue, index, match){
@@ -207,6 +209,10 @@ angular.module('pokomonApp')
             $scope.matchResults.push(equationString);*/
 
         });
+        } else {
+            $scope.matchResults = [{string : "there were no results for this criteria"}];
+        }
+
     }
 
     $scope.thirdItemSelected = function($item, $model){
