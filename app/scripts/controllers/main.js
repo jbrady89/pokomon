@@ -107,4 +107,43 @@ angular.module('pokomonApp')
 
     }
 
+    var lookUp = function(index, type){
+        console.log(index, type);
+    }
+
+    var reverseLookup = function(results){
+        console.dir(JSON.stringify(results))
+        results.forEach(function(result){
+            result.forEach(function(obj){
+                console.log(obj);
+                console.log(Object.keys(obj));
+                var keys = Object.keys(obj);
+                for (var i = 0; i < keys.length; i += 2){
+                    lookUp(obj[keys[i]], obj[keys[i + 1]]);
+                }
+            });
+        });
+    }
+
+    $scope.thirdItemSelected = function($item, $model){
+        //console.log($item);
+        //console.log($model);
+
+        console.log($item.ids);
+        // this is the array with the indexes to look up in matches.json
+        var matchesArray = $item.ids;
+        $http.get("/data/matches.json")
+        .then(function(matches){
+            var matches = matches.data;
+            var returnedMatches = matchesArray.map(function(index){
+                console.log(index);
+                return matches[index - 1].matches
+            });
+            console.dir(returnedMatches);
+            $scope.results = returnedMatches;
+            reverseLookup($scope.results);
+
+        });
+    }
+
   });
