@@ -10,5 +10,5 @@
     "angular-route": "~1.2.0",
     "angular-ui-select":"latest",
     "angular-sanitize":"latest"
-  },
+  }
 }
