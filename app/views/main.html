@@ -1,5 +1,6 @@
 <div class="jumbotron">
   <div class="row">
+    
     <div class="col-xs-6 col-xs-offset-3">
       <ui-select ng-model="firstItem.selected" on-select="firstItemSelected($item, $model)" theme="selectize" >
         <ui-select-match placeholder="Select a search criteria...">{{$select.selected}}</ui-select-match>
@@ -8,6 +9,7 @@
         </ui-select-choices>
       </ui-select>
     </div>
+
     <div class="col-xs-6 col-xs-offset-3">
       <ui-select ng-model="secondItem.selected" on-select="secondItemSelected($item, $model)" theme="selectize" ng-disabled="secondDisabled" >
         <ui-select-match placeholder="Select another...">{{$select.selected.name || $select.selected}}</ui-select-match>
@@ -16,6 +18,7 @@
         </ui-select-choices>
       </ui-select>
     </div>
+
     <div class="col-xs-6 col-xs-offset-3">
       <ui-select ng-show="longList" ng-model="thirdItem.selected" on-select="thirdItemSelected($item, $model)" theme="selectize" ng-disabled="thirdDisabled" >
         <ui-select-match placeholder="Select another...">{{$select.selected.name}}</ui-select-match>
@@ -24,6 +27,7 @@
         </ui-select-choices>
       </ui-select>
     </div>
+
   </div>
 
   <br/>
