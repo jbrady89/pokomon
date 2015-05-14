@@ -184,7 +184,7 @@ angular.module('pokomonApp')
                                      "<a href='" + url3 + "' target='_blank'>" + name3 + "</a> + " + 
                                      "<a href='" + url4 + "' target='_blank'>" + name4 + "</a>";
 
-                $scope.matchResults.push(equationString);
+                //$scope.matchResults.push(equationString);
 
             } else if (match.length == 3) {
                 var name1 = match[0][0].name;
@@ -232,6 +232,7 @@ angular.module('pokomonApp')
         } else {
             $scope.matchResults = [{string : "there were no results for this criteria"}];
         }
+        console.log($scope.matchResults);
 
     }
 
