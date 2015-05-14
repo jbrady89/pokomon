@@ -8,7 +8,15 @@
  * Controller of the pokomonApp
  */
 angular.module('pokomonApp')
-  .controller('MainCtrl', function ($http, $scope) {
+.filter("removeEmpty", function(){
+    return function(val){
+        var str = val;
+        console.log(val);
+        var newStr = str.replace("<a href='' target='_blank'></a> +", "");
+        return newStr;
+    };
+})
+.controller('MainCtrl', function ($http, $scope) {
 
   	// items to populate first list
     $scope.firstList = ['abilities', 'cities and towns', 'items', 'locations', 'moves', 'natures', 'pokemons', 'regions'];

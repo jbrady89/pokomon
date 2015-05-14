@@ -32,7 +32,7 @@
     <div ng-show="loading">loading</div>
     <ul class="list-group">
         <li ng-repeat="result in matchResults" class="list-group-item">
-            <span ng-bind-html="result.string"></span>
+            <span ng-bind-html="result.string | removeEmpty"></span>
         </li>
     </ul>
   </div>
