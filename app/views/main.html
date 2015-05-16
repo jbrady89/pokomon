@@ -33,7 +33,7 @@
     <ul class="list-group">
         <li ng-repeat="result in matchResults" class="list-group-item">
             <span ng-bind-html="result.string | removeEmpty"></span>
-            <div class="shareContainer">
+            <div class="shareContainer" ng-show="gotMatchResults">
               <span
               socialshare
               socialshare-provider="twitter"

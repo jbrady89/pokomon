@@ -231,9 +231,10 @@ angular.module('pokomonApp')
             });
 
             $scope.matchResults.push(equationString);*/
-
+            $scope.gotMatchResults = true;
         });
         } else {
+            $scope.gotMatchResults = false;
             $scope.matchResults = [{string : "there were no results for this criteria"}];
         }
         console.log($scope.matchResults);
