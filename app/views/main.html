@@ -33,6 +33,15 @@
     <ul class="list-group">
         <li ng-repeat="result in matchResults" class="list-group-item">
             <span ng-bind-html="result.string | removeEmpty"></span>
+            <div class="shareContainer">
+              <span
+              socialshare
+              socialshare-provider="twitter"
+              socialshare-text="I just found something cool on pokogram! {{result.shareText}} - "
+              socialshare-url="http://pokomon.herokuapp.com">
+              Share me
+              </span> 
+            </div>
         </li>
     </ul>
   </div>

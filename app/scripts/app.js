@@ -10,7 +10,7 @@
  */
 angular
   .module('pokomonApp', [
-    'ngRoute','ngSanitize', 'ui.select'
+    'ngRoute','ngSanitize', 'ui.select', '720kb.socialshare'
   ])
   .config(function ($routeProvider) {
     $routeProvider

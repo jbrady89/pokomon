@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name pokomonApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the pokomonApp
- */
 angular.module('pokomonApp')
 .filter("removeEmpty", function(){
     return function(val){
@@ -192,6 +185,8 @@ angular.module('pokomonApp')
                                      "<a href='" + url3 + "' target='_blank'>" + name3 + "</a> + " + 
                                      "<a href='" + url4 + "' target='_blank'>" + name4 + "</a>";
 
+                var shareText = name1 + " + " + name2 + " = " + name3 + " + " + name4;
+
                 //$scope.matchResults.push(equationString);
 
             } else if (match.length == 3) {
@@ -215,11 +210,12 @@ angular.module('pokomonApp')
                                      "<a href='" + url5 + "' target='_blank'>" + name5 + "</a> + " + 
                                      "<a href='" + url6 + "' target='_blank'>" + name6 + "</a>";
 
-
+                var shareText = url1 + " + " + url2 + " = " + url3 + " + " + url4 + " = " + url5 + " + " + url6;
             }
 
             var result = {
-                    string: equationString
+                    string: equationString,
+                    shareText: shareText
                 };
 
             $scope.matchResults.push(result);
