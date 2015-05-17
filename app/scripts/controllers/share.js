@@ -13,7 +13,7 @@ angular.module('pokomonApp')
 
     $scope.fbShare = function fbShare(){
     	var shareConfig = {
-    		method: "share",
+    		method: "feed",
     		name: "pokomon",
     		link: "http://pokomon.herokuapp.com",
     		href: "http://pokomon.herokuapp.com",
