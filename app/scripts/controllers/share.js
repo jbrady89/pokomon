@@ -15,7 +15,8 @@ angular.module('pokomonApp')
     	var shareConfig = {
     		method: "share",
     		name: "pokomon",
-    		href: "pokomon.herokuapp.com",
+    		link: "http://pokomon.herokuapp.com",
+    		href: "http://pokomon.herokuapp.com",
     		description: "I just found this cool thing on pokogram!"
     	}
     	FB.ui(shareConfig, function(res){
