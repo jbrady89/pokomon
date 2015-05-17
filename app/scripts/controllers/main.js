@@ -268,13 +268,13 @@ angular.module('pokomonApp')
         });
     }
 
-    $scope.fbShare = function fbShare(){
+    $scope.fbShare = function fbShare(result){
         var shareConfig = {
             method: "feed",
             name: "pokomon",
             link: "http://pokomon.herokuapp.com",
             href: "http://pokomon.herokuapp.com",
-            caption: "I just found this cool thing on pokogram!"
+            caption: "I just found this cool thing on pokogram! - " + result;
         }
         FB.ui(shareConfig, function(res){
             console.log(res);
