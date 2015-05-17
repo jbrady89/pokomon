@@ -33,7 +33,7 @@
     <ul class="list-group">
         <li ng-repeat="result in matchResults" class="list-group-item">
             <span ng-bind-html="result.string | removeEmpty"></span>
-            <div class="shareContainer" ng-show="gotMatchResults" ng-controller="shareCtrl">
+            <div class="shareContainer" ng-show="gotMatchResults">
               <span
               socialshare
               socialshare-provider="twitter"
@@ -41,7 +41,7 @@
               socialshare-url="http://pokomon.herokuapp.com">
               Twitter
               </span> 
-              <span ng-click="fbShare()">
+              <span ng-click="fbShare(result.shareText)">
               FB
               </span> 
             </div>
