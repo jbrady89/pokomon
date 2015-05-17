@@ -3,7 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <meta name="description" content="">
+    <meta name="description" content="pokemon anagram generator">
+    <meta name="keywords" content="pokemon, pokemon generator, pokemon anagram, anagram generator">
+    <meta property="og:url" content="http://pokomon.herokuapp.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="pokogram" />
+    <meta property="og:description" content="Find cool stuff with pokogram" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -17,6 +22,23 @@
     <!-- endbuild -->
   </head>
   <body ng-app="pokomonApp">
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1570374359902966',
+          xfbml      : true,
+          version    : 'v2.3'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -36,6 +58,12 @@
 
       <div class="footer">
         <span>pokogram&trade;</span>
+        <div
+          class="fb-like"
+          data-share="true"
+          data-width="450"
+          data-show-faces="true">
+        </div>
       </div>
     </div>
 
@@ -75,6 +103,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/services/listservice.js"></script>
+        <script src="scripts/controllers/share.js"></script>
         <!-- endbuild -->
 </body>
 </html>
