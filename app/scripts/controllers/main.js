@@ -274,7 +274,7 @@ angular.module('pokomonApp')
             name: "pokomon",
             link: "http://pokomon.herokuapp.com",
             href: "http://pokomon.herokuapp.com",
-            caption: "I just found this cool thing on pokogram! - " + result;
+            caption: "I just found this cool thing on pokogram! - " + result
         }
         FB.ui(shareConfig, function(res){
             console.log(res);
