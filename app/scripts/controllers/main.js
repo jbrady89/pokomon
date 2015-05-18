@@ -17,10 +17,10 @@ angular.module('pokomonApp')
     console.log($scope.lettersList);
     // second one is disabled until first one is selected
     $scope.secondDisabled = true;
-
     // these are the references to the currently selected criteria
     var firstItem = $scope.firstItem = {},
     	secondItem = $scope.secondItem = {},
+        thirdItem = $scope.thirdItem = {},
    		path,
     	getSecondListFrom = function(path){
 	    		return $http.get(path)
@@ -37,6 +37,8 @@ angular.module('pokomonApp')
 			$scope.secondDisabled = false;
     	};
 
+    $scope.firstItem.current = "";
+
     // value of ng-show attribute set based on this
 	$scope.gotResults = function(){
 
@@ -52,19 +54,25 @@ angular.module('pokomonApp')
 	// fires when first item is selected
     $scope.firstItemSelected = function($item, $model){
 
-        if ( $item.match(/^(natures|regions)$/) ){
+        var currentItem = $scope.firstItem.current;
+        if (currentItem !== $item){ 
+            if ( $item.match(/^(natures|regions)$/) ){
 
-            path = "/data/" + $item + ".json";
-            $scope.longList = false;
+                path = "/data/" + $item + ".json";
+                $scope.longList = false;
+                getSecondListFrom(path)
+                .then(createArray);
+                
+            } else {
+                $scope.secondList = $scope.lettersList;
+                $scope.longList = true;
+                $scope.secondItem.selected = undefined;
+                $scope.thirdItem.selected = undefined;
+
+            }
             $scope.secondDisabled = false;
-            getSecondListFrom(path)
-            .then(createArray);
-            
-        } else {
-            $scope.secondList = $scope.lettersList;
-            $scope.longList = true;
-            $scope.secondItem.selected = undefined;
-            $scope.secondDisabled = false;
+            $scope.firstItem.current = $item;
+
         }
 
     }
@@ -72,58 +80,63 @@ angular.module('pokomonApp')
     // fires when second item is selected
     $scope.secondItemSelected = function($item, $model){
     	//console.log("second item selected " + $item);
-        
-        if ( $.inArray($item, $scope.lettersList) !== -1) {
-            //show 3rd dropdown
-            if ($scope.firstItem.selected == "cities and towns"){
-                path = "/data/cities.json";
-            } else {
-                path = "/data/" + $scope.firstItem.selected + ".json";
-            }
+        var currentItem = $scope.secondItem.current;
+        if (currentItem !== $item){
+            if ( $.inArray($item, $scope.lettersList) !== -1) {
+                //show 3rd dropdown
+                if ($scope.firstItem.selected == "cities and towns"){
+                    path = "/data/cities.json";
+                } else {
+                    path = "/data/" + $scope.firstItem.selected + ".json";
+                }
+                if ($scope.thirdItem.selected !== undefined){
+                    $scope.thirdItem.selected = undefined;
+                }
+                $http.get(path)
+                .then(function(response){
 
-            $http.get(path)
-            .then(function(response){
+                    var items = response.data
+                    var filteredList = items.filter(function(item){
+                        return item.letter == $item;
+                    });
 
-                var items = response.data
-                var filteredList = items.filter(function(item){
-                    return item.letter == $item;
+                    $scope.thirdList = filteredList;
+                    $scope.thirdDisabled = false;
+
                 });
 
-                $scope.thirdList = filteredList;
-                $scope.thirdDisabled = false;
+            } else {
 
-            });
+                // return some results based on the first and second items
+                var first = firstItem.selected;
+                var second = secondItem.selected;
+                console.log(first, second);
 
-        } else {
+                // put our returned results here
+                console.log($item.ids);
+            // this is the array with the indexes to look up in matches.json
+                var matchesArray = $item.ids;
+                $scope.loading = true;
+                $http.get("/data/matches.json")
+                .then(function(matches){
+                    console.log(matches);
+                    var matches = matches.data;
+                    var returnedMatches = matchesArray.map(function(index){
+                        console.log(index);
+                        return matches[index - 1].matches
+                    });
+                    console.dir(returnedMatches);
+                    $scope.results = returnedMatches;
+                    reverseLookup($scope.results);
+                    $scope.loading = false;
 
-            // return some results based on the first and second items
-            var first = firstItem.selected;
-            var second = secondItem.selected;
-            console.log(first, second);
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
 
-            // put our returned results here
-            console.log($item.ids);
-        // this is the array with the indexes to look up in matches.json
-        var matchesArray = $item.ids;
-        $scope.loading = true;
-        $http.get("/data/matches.json")
-        .then(function(matches){
-            console.log(matches);
-            var matches = matches.data;
-            var returnedMatches = matchesArray.map(function(index){
-                console.log(index);
-                return matches[index - 1].matches
-            });
-            console.dir(returnedMatches);
-            $scope.results = returnedMatches;
-            reverseLookup($scope.results);
-            $scope.loading = false;
-
-        })
-        .catch(function(err){
-            console.log(err);
-        });
-
+            }
+            $scope.secondItem.current = $item;
         }
 
     }
