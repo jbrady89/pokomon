@@ -31,19 +31,31 @@
   <div class="results">
     <div ng-show="loading">loading</div>
     <ul class="list-group">
-        <li ng-repeat="result in matchResults" class="list-group-item">
-            <span ng-bind-html="result.string | removeEmpty"></span>
-            <div class="shareContainer" ng-show="gotMatchResults">
-              <span
+        <li ng-repeat="(resultIndex, result) in matchResults" class="list-group-item" >
+            <!-- results -->
+            <div class="row">
+              <span ng-bind-html="result.string | removeEmpty"></span>
+            </div>
+            <hr>
+            <div class="row">
+              <span>Share your Discovery!</span>
+              <button class="btn btn-default" ng-click="showShareButtons(result)">
+                <span class="glyphicon glyphicon-share-alt"></span>
+              </button>
+            </div>
+            <!-- break -->
+            <hr>
+            <div class="shareContainer" ng-show="result.sharing">
+              <div class="btn btn-default"><span
               socialshare
               socialshare-provider="twitter"
               socialshare-text="I just found something cool on pokogram! {{result.shareText}} - "
               socialshare-url="http://pokomon.herokuapp.com">
               Twitter
-              </span> 
-              <span ng-click="fbShare(result.shareText)">
+              </span></div> 
+              <div class="btn btn-default"><span ng-click="fbShare(result.shareText)">
               FB
-              </span> 
+              </span></div>
             </div>
         </li>
     </ul>

@@ -4,7 +4,6 @@ angular.module('pokomonApp')
 .filter("removeEmpty", function(){
     return function(val){
         var str = val;
-        console.log(val);
         var newStr = str.replace("<a href='' target='_blank'></a> +", "");
         return newStr;
     };
@@ -14,7 +13,6 @@ angular.module('pokomonApp')
   	// items to populate first list
     $scope.firstList = ['abilities', 'cities and towns', 'items', 'locations', 'moves', 'natures', 'pokemons', 'regions'];
     $scope.lettersList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
-    console.log($scope.lettersList);
     // second one is disabled until first one is selected
     $scope.secondDisabled = true;
     // these are the references to the currently selected criteria
@@ -110,7 +108,6 @@ angular.module('pokomonApp')
                 // return some results based on the first and second items
                 var first = firstItem.selected;
                 var second = secondItem.selected;
-                console.log(first, second);
 
                 // put our returned results here
                 console.log($item.ids);
@@ -122,10 +119,8 @@ angular.module('pokomonApp')
                     console.log(matches);
                     var matches = matches.data;
                     var returnedMatches = matchesArray.map(function(index){
-                        console.log(index);
                         return matches[index - 1].matches
                     });
-                    console.dir(returnedMatches);
                     $scope.results = returnedMatches;
                     reverseLookup($scope.results);
                     $scope.loading = false;
@@ -200,8 +195,6 @@ angular.module('pokomonApp')
 
                 var shareText = name1 + " + " + name2 + " = " + name3 + " + " + name4;
 
-                //$scope.matchResults.push(equationString);
-
             } else if (match.length == 3) {
                 var name1 = match[0][0].name;
                 var url1 = match[0][0].url;
@@ -232,18 +225,6 @@ angular.module('pokomonApp')
                 };
 
             $scope.matchResults.push(result);
-            /*console.log(matches.length);
-        
-            match[0].name;
-
-            var equationString = match.reduce(function(previousValue, currentValue, index, match){
-                console.log(previousValue, currentValue);
-                console.log(index);
-
-                return createEquationString(previousValue, currentValue, index);
-            });
-
-            $scope.matchResults.push(equationString);*/
             $scope.gotMatchResults = true;
         });
         } else {
@@ -294,4 +275,9 @@ angular.module('pokomonApp')
         });
     };
 
-  });
+    $scope.showShareButtons = function showShareButtons(result){
+
+        result.sharing = !result.sharing;
+    }
+
+});
