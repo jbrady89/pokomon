@@ -5,7 +5,7 @@
     <div class="">
       <ui-select ng-model="firstItem.selected" on-select="firstItemSelected($item, $model)" theme="selectize" >
         <ui-select-match placeholder="Select a search criteria...">{{$select.selected}}</ui-select-match>
-        <ui-select-choices repeat="firstItem in firstList">
+        <ui-select-choices repeat="firstItem in firstList | filter: $select.search">
           <span>{{firstItem}}</span>
         </ui-select-choices>
       </ui-select>
@@ -14,8 +14,10 @@
     <!-- second dropdown -->
     <div class="">
       <ui-select ng-model="secondItem.selected" on-select="secondItemSelected($item, $model)" theme="selectize" ng-disabled="secondDisabled" >
-        <ui-select-match placeholder="Select another...">{{$select.selected.name || $select.selected}}</ui-select-match>
-        <ui-select-choices repeat="secondItem in secondList track by $index">
+        <ui-select-match placeholder="Select another...">
+          {{$select.selected.name || $select.selected}}
+        </ui-select-match>
+        <ui-select-choices repeat="secondItem in secondList | filter: $select.search">
           <span>{{secondItem.name || secondItem}}</span>
         </ui-select-choices>
       </ui-select>
@@ -25,7 +27,7 @@
     <div class="">
       <ui-select ng-show="longList" ng-model="thirdItem.selected" on-select="thirdItemSelected($item, $model)" theme="selectize" ng-disabled="thirdDisabled" >
         <ui-select-match placeholder="Select another...">{{$select.selected.name}}</ui-select-match>
-        <ui-select-choices repeat="thirdItem in thirdList track by $index">
+        <ui-select-choices repeat="thirdItem in thirdList | filter: $select.search">
           <span>{{thirdItem.name}}</span>
         </ui-select-choices>
       </ui-select>
@@ -56,8 +58,20 @@
 
         <!-- social share buttons -->
         <hr>
-        <div class="fadein" ng-show="result.sharing" ng-init="result.sharing = false">Share Buttons</div>
-          
+        <div class="fadein" ng-show="result.sharing" ng-init="result.sharing = false">
+          <div class="btn btn-default">
+            <span
+              socialshare
+              socialshare-provider="twitter"
+              socialshare-text="I just found something cool on pokogram! {{result.shareText}} - "
+              socialshare-url="http://pokomon.herokuapp.com">
+              Twitter
+            </span>
+          </div> 
+          <div class="btn btn-default"><span ng-click="fbShare(result.shareText)">
+          FB
+          </span></div>
+        </div>
       </li>
     </ul>
   </div>
