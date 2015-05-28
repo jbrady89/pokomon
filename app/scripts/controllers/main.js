@@ -11,6 +11,9 @@ angular.module('pokomonApp')
 .controller('MainCtrl', function ($http, $scope) {
 
   	// items to populate first list
+    $scope.results = [];
+    $scope.secondList = [];
+    $scope.thirdList = [];
     $scope.firstList = ['abilities', 'cities and towns', 'items', 'locations', 'moves', 'natures', 'pokemons', 'regions'];
     $scope.lettersList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
     // second one is disabled until first one is selected
@@ -58,8 +61,8 @@ angular.module('pokomonApp')
 
                 path = "/data/" + $item + ".json";
                 $scope.longList = false;
-                getSecondListFrom(path)
-                .then(createArray);
+                //getSecondListFrom(path)
+                //.then(createArray);
                 
             } else {
                 $scope.secondList = $scope.lettersList;
@@ -72,7 +75,6 @@ angular.module('pokomonApp')
             $scope.firstItem.current = $item;
 
         }
-
     }
 
     // fires when second item is selected

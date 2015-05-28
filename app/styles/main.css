@@ -77,3 +77,37 @@ body {
     border-bottom: 0;
   }
 }
+
+
+.fadein.ng-hide
+
+.fadein.ng-hide.ng-hide-add-active {
+    display: block !important;
+}
+.fadein.ng-hide-remove, .fadein.ng-hide-remove.ng-hide-remove-active {
+    -webkit-animation: show_it 1s linear; /* Safari/Chrome */
+    animation: show_it 1s linear; /* IE10+ and Future Browsers */
+}
+.fadein.ng-hide-add, .fadein.ng-hide-add.ng-hide-add-active {
+    -webkit-animation: hide_it 1s linear; /* Safari/Chrome */
+    animation: hide_it 1s linear; /* IE10+ and Future Browsers */
+}
+
+@-webkit-keyframes show_it {
+    0% { opacity:0; }
+    100% { opacity:1; }
+}
+@keyframes show_it {
+    0% { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-webkit-keyframes hide_it {
+    0% { opacity:1; }
+    100% { opacity:0; }
+}
+
+@keyframes hide_it {
+    0% { opacity:1; }
+    100% { opacity:0; }
+}
